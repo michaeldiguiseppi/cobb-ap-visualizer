@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import LineChart from './LineChart';
 
-function App() {
+const sendFile = (setData) => {
+  const file = document.getElementById('file').files[0]
+  const url = 'http://localhost:3002/report';
+  console.warn('yeet file', file);
+  fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    body: file,
+    headers: {
+      'Content-Type': 'text/csv'
+    }
+  })
+    .then(resp => resp.json())
+    .then(resp => setData(resp))
+}
+
+const App = () => {
+  const [data, setData] = useState();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LineChart width='1000' height='500' data={data}/>
+      <input id='file' type='file'></input>
+      <button onClick={() => sendFile(setData)}>Send</button>
     </div>
   );
 }
