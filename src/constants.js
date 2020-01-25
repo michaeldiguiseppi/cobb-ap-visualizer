@@ -1,0 +1,17 @@
+export const time = 'Time (sec)';
+export const afCorrection1 = 'AF Correction 1 (%)';
+export const afLearning1 = 'AF Learning 1 (%)';
+export const afRatio1 = 'AF Sens 1 Ratio (AFR)';
+export const boost = 'Boost (psi)';
+export const load = 'Calculated Load (g/rev)';
+export const feedbackKnock = 'Feedback Knock (∞)';
+export const fineKnockLearn = 'Fine Knock Learn (∞)';
+export const ignitionTiming = 'Ignition Timing (∞)';
+export const injDutyCycle = 'Inj. Duty Cycle (%)'
+export const intakeTemp = 'Intake Temp (F)'
+export const maf = 'MAF (g/s)'
+export const mafVoltage = 'MAF Volt. (V)'
+export const primaryIgnition = 'Primary Ign. (∞)'
+export const rpm = 'RPM (RPM)'
+export const throttlePosition = 'Throttle Pos. (%)'
+export const wastegateDuty = 'Wastegate Duty (%)'

@@ -1,32 +1,40 @@
 import React, {useState} from 'react';
-import LineChart from './LineChart';
+import AppRouter from './router';
+import withFirebaseAuth, { WrappedComponentProps } from 'react-with-firebase-auth'
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
+import AuthModal from './AuthModal/AuthModal';
 
-const sendFile = (setData) => {
-  const file = document.getElementById('file').files[0]
-  const url = 'http://localhost:3002/report';
-  console.warn('yeet file', file);
-  fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    body: file,
-    headers: {
-      'Content-Type': 'text/csv'
-    }
-  })
-    .then(resp => resp.json())
-    .then(resp => setData(resp))
-}
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const App = () => {
-  const [data, setData] = useState();
+const firebaseAppAuth = firebaseApp.auth();
+
+const providers = {
+  googleProvider: new firebase.auth.EmailAuthProvider(),
+};
+
+
+
+const App = ({user, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut}) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div className="App">
-      <LineChart width='1000' height='500' data={data}/>
-      <input id='file' type='file'></input>
-      <button onClick={() => sendFile(setData)}>Send</button>
+      <AppRouter />
+      <AuthModal 
+        user={user}
+        createUserWithEmailAndPassword={createUserWithEmailAndPassword}
+        signInWithEmailAndPassword={signInWithEmailAndPassword}
+        signOut={signOut}
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   );
 }
 
-export default App;
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(App);
