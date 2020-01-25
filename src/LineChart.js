@@ -41,11 +41,11 @@ const LineChart = ({
 	if (data) {
 		// accessors
 		// these work
-		const x = d => d[time];
-		const y = d => d[boost];
+		// const x = d => d[time];
+		// const y = d => d[boost];
 		// these don't work, see line 84 for how they're being used
-		// const x = (d, property) => d[property];
-		// const y = (d, property) => d[property];
+		const x = (d, property) => d[property];
+		const y = (d, property) => d[property];
 
 		// bounds
 		const xMax = width;
@@ -79,11 +79,11 @@ const LineChart = ({
 					<Group key={`lines-${1}`} top={1 * yMax / 2}>
 						<LinePath
 							data={data}
-							x={d => xScale(x(d))}
-							y={d => yBoostScale(y(d))}
+							// x={d => xScale(x(d))}
+							// y={d => yBoostScale(y(d))}
 							// these don't work
-							// x={d => xScale(x(d, time))}
-							// y={d => yScale(y(d, boost))}
+							x={(d, time) => xScale(x(d, time))}
+							y={(d, boost) => yScale(y(d, boost))}
 							stroke={'#ffffff'}
 							strokeWidth={1}
 							curve={1 % 2 === 0 ? curveMonotoneX : undefined}
